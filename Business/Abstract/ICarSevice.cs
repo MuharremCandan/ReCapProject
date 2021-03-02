@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Business.Abstarct
+namespace Business.Abstract
 {
-    public interface ICarSevice
+    public interface ICarSevice: IBussiniesRepository<Car>
     {
-        List<Car> GetAll();
+   
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Entities.Abstarct
+namespace Entities.Abstract
 {
-    class IEntity
+    public interface IEntity
     {
     }
 }
