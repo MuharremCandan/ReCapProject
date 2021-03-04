@@ -1,12 +1,17 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results.Abstract;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Abstract
 {
-    public interface IBrandService : IBussiniesRepository<Brand>
+    public interface IBrandService 
     {
-        Brand GetCarsByBrandId(int id);
+        IDataResult<List<Brand>> GetAll();
+        IResult Add(Brand entity);
+        IResult Update(Brand entity);
+        IResult Delete(Brand entity);
+        IDataResult<Brand> GetCarsByBrandId(int id);
     }
 }

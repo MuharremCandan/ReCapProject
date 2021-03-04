@@ -12,6 +12,99 @@ namespace ConsolUI
     {
         public static void Main(String[] args)
         {
+            //ColorTest();
+
+            //BrandTest();
+
+            CarTest();
+
+        }
+
+        private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            // Araç Ekleme
+            //carManager.Add(new Car
+            //{
+            //    ColorId = 3016,
+            //    BrandId = 3018,
+            //    Name = "New Cadillac Series",
+            //    ModelYear = 2019,
+            //    Description = "Null.",
+            //    DailyPrice = 150000
+            //});
+            //carManager.Add(new Car
+            //{
+            //    ColorId = 3017,
+            //    BrandId = 3018,
+            //    Name = "New BMW Series",
+            //    ModelYear = 2020,
+            //    Description = "Null.",
+            //    DailyPrice = 100000
+            //});
+
+            // Araç Silme 
+            //carManager.Delete(new Car { Id=3027 });
+
+            //Araç Güncelleme
+            //carManager.Update(new Car { Id = 3026, BrandId=3019,ColorId=3017, Name="Corolla",DailyPrice=120000});
+
+            //Tüm Araçları Getirme
+            //foreach (var car in carManager.GetAll())
+            //{
+            //    Console.WriteLine(car.Id+" / "+ car.Name);
+            //}
+
+            // tabloların birleştirilmesi sonucu araç getirme  Bunu Dto ile ilişkili joinler vs.
+            var result = carManager.GetCarDetails();
+            if (result.Success == true)
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine("Name: {0} \nBrand :{1}  \nColor: {2}  \nPrice: {3} ", car.CarName, car.BrandName,
+                        car.ColorName, car.DailyPrice);
+                    Console.WriteLine();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void BrandTest()
+        {
+            // Brand İşlemleri
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+            //Ekleme
+            //brandManager.Add(new Brand { BrandName = "BMW" });
+            //brandManager.Add(new Brand { BrandName = "Toyota" });
+            //brandManager.Add(new Brand { BrandName = "Honda" });
+            //brandManager.Add(new Brand { BrandName = "Chevrolet" });
+
+            //Silme
+            //brandManager.Delete(new Brand { BrandId = 3021 });
+
+            //Güncelleme
+            //brandManager.Update(new Brand { BrandId = 3020, BrandName = "Cadillac" });
+
+            //Hepsini Getirme
+            //foreach (var brand in brandManager.GetAll())
+            //{
+            //    Console.WriteLine(brand.BrandName);
+            //}
+
+            // spesifik getirme . Random sayı brandId si 1 olan araç yok şu an 
+            //foreach (var brand in brandManager.GetCarsByBrandId(1))
+            //{
+            //    Console.WriteLine(brand);
+            //}
+        }
+
+        private static void ColorTest()
+        {
             //Color İşlemleri
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
@@ -39,87 +132,6 @@ namespace ConsolUI
             //{
             //    Console.WriteLine(color.);
             //}
-
-
-
-            // Brand İşlemleri
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-
-            //Ekleme
-            //brandManager.Add(new Brand { BrandName = "BMW" });
-            //brandManager.Add(new Brand { BrandName = "Toyota" });
-            //brandManager.Add(new Brand { BrandName = "Honda" });
-            //brandManager.Add(new Brand { BrandName = "Chevrolet" });
-
-            //Silme
-            //brandManager.Delete(new Brand { BrandId = 3021 });
-
-            //Güncelleme
-            //brandManager.Update(new Brand { BrandId = 3020, BrandName = "Cadillac" });
-
-            //Hepsini Getirme
-            //foreach (var brand in brandManager.GetAll())
-            //{
-            //    Console.WriteLine(brand.BrandName);
-            //}
-
-            // spesifik getirme . Random sayı brandId si 1 olan araç yok şu an 
-            //foreach (var brand in brandManager.GetCarsByBrandId(1))
-            //{
-            //    Console.WriteLine(brand);
-            //}
-
-
-            CarManager carManager = new CarManager(new EfCarDal());
-            // Araç Ekleme
-            //carManager.Add(new Car
-            //{
-            //    ColorId = 3016,
-            //    BrandId = 3018,
-            //    Name = "New Cadillac Series",
-            //    ModelYear = 2019,
-            //    Description = "Null.",
-            //    DailyPrice = 150000
-            //});
-            //carManager.Add(new Car
-            //{
-            //    ColorId = 3017,
-            //    BrandId = 3018,
-            //    Name = "New BMW Series",
-            //    ModelYear = 2020,
-            //    Description = "Null.",
-            //    DailyPrice = 100000
-            //});
-            
-            // Araç Silme 
-            //carManager.Delete(new Car { Id=3027 });
-
-            //Araç Güncelleme
-            //carManager.Update(new Car { Id = 3026, BrandId=3019,ColorId=3017, Name="Corolla",DailyPrice=120000});
-
-            //Tüm Araçları Getirme
-            //foreach (var car in carManager.GetAll())
-            //{
-            //    Console.WriteLine(car.Id+" / "+ car.Name);
-            //}
-
-            // tabloların birleştirilmesi sonucu araç getirme  Bunu Dto ile ilişkili joinler vs.
-            foreach (var car in carManager.GetCarDetails())
-            {
-                Console.WriteLine("Name: {0} \nBrand :{1}  \nColor: {2}  \nPrice: {3} ", car.CarName,car.BrandName,
-                    car.ColorName,car.DailyPrice);
-                Console.WriteLine();
-            }
-
-
-
-            
-
-
         }
-
-
-
-
     }
 }
