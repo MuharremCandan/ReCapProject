@@ -10,5 +10,6 @@ namespace Business.Constans
         public static string Deleted = "The item has been removed!!";
         public static string NameInvalid = "Innvalid Name!!";
         public static string Added = "The item has been added!!";
+        public  static string ReturnDateInvalid="The car is not able to use.";
     }
 }

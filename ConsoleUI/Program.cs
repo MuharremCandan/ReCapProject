@@ -19,7 +19,8 @@ namespace ConsolUI
             //CustomerTest();
 
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/5/2021" });
+           // rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/5/2021" });
+            rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/6/2021" });
 
         }
 

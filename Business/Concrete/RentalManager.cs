@@ -19,8 +19,17 @@ namespace Business.Concrete
         }
         public IResult Add(Rental entity)
         {
-            _rentalDal.Add(entity);
-            return new SuccessResult(Messages.Added);
+
+            if (entity.ReturnDate == null)
+            {
+                _rentalDal.Add(entity);
+                return new SuccessResult(Messages.Added);
+            }
+            else
+            {
+                return new ErrorResult(Messages.ReturnDateInvalid);
+            }
+            
         }
 
         public IResult Delete(Rental entity)
