@@ -20,7 +20,7 @@ namespace DataAccess.Concrete
             {
                 var result = from c in context.Cars
                              join b in context.Brands
-                             on c.BrandId equals b.BrandId
+                             on c.BrandId equals b.BrandId  
                              join x in context.Colors
                              on c.ColorId equals x.ColorId
                              select new CarDetailDto

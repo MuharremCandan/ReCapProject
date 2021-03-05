@@ -13,11 +13,49 @@ namespace ConsolUI
         public static void Main(String[] args)
         {
             //ColorTest();
-
             //BrandTest();
+            // CarTest();
+            //UserTest();
+            //CustomerTest();
 
-            CarTest();
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/5/2021" });
 
+        }
+
+        private static void CustomerTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            //customerManager.Add(new Customer { UserId = 1 ,CompanyName = "MuharremCNDN" }) ;
+            //customerManager.Add(new Customer {UserId=2, CompanyName = "AkinSoftware" });
+        }
+
+        private static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            //// User Ekleme İşlemleri
+            //userManager.Add(new User { FirstName = "Muharrem", LastName = "Candan", Email = "1muharremcandan@gmail.com", Password = 1234567890 });
+            //userManager.Add(new User { FirstName = "Akın", LastName = "Kılıç", Email = "1akinklc@gmail.com", Password = 13579 });
+
+            //User ları ekran getirme 
+            var result = userManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var user in result.Data)
+                {
+                    Console.WriteLine("Name: {0} \nLast Name :{1}  \nMail: {2}", user.FirstName, user.LastName, user.Email);
+                    Console.WriteLine();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+
+            // User Güncelleme
+            //userManager.Update(new User { Id=})
         }
 
         private static void CarTest()
