@@ -11,5 +11,7 @@ namespace Business.Constans
         public static string NameInvalid = "Innvalid Name!!";
         public static string Added = "The item has been added!!";
         public  static string ReturnDateInvalid="The car is not able to use.";
+        public  static string Listed="The items has been listed !";
+        public  static string CarIsNotAbleToRent = "The Car is not able to rent right now !";
     }
 }

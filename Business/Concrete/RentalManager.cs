@@ -2,6 +2,7 @@
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -23,17 +24,14 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental entity)
         {
-
-            if (entity.ReturnDate == null)
+            IResult result = BusinessRules.Run(CheckIfReturnDateIsNull());
+            if (!result.Success)
             {
                 _rentalDal.Add(entity);
                 return new SuccessResult(Messages.Added);
+
             }
-            else
-            {
-                return new ErrorResult(Messages.ReturnDateInvalid);
-            }
-            
+            return new ErrorResult(Messages.ReturnDateInvalid);
         }
 
         public IResult Delete(Rental entity)
@@ -49,6 +47,15 @@ namespace Business.Concrete
         public IResult Update(Rental entity)
         {
             throw new NotImplementedException();
+        }
+        private IResult CheckIfReturnDateIsNull()
+        {
+            var result = _rentalDal.Get(p => p.ReturnDate == null);
+            if (result == null)
+            {
+                return new ErrorResult(Messages.CarIsNotAbleToRent);
+            }
+            return new SuccessResult();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -24,6 +25,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand entity)
         {
+            IResult result = BusinessRules.Run();
             _brandDal.Add(entity);
            return new SuccessResult(Messages.Added);
         }
