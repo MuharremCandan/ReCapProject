@@ -18,9 +18,20 @@ namespace ConsolUI
             //UserTest();
             //CustomerTest();
 
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-           // rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/5/2021" });
-            rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/6/2021" });
+            // RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //// rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/5/2021" });
+            // rentalManager.Add(new Rental { CarId = 3026, CustomerId = 2, RentDate = "3/6/2021" });
+
+            CarImageManager carImageManager = new CarImageManager(new EfCarImageDal());
+            //carImageManager.Add(new CarImage
+            //{
+            //    CarId = 3026,
+            //    ImagePath = "fsddgdfgfdgdf",
+            //    ImageDate = DateTime.Now
+
+
+            //}) ;
+            //carImageManager.Update(FormFile file new CarImage { Id = 6, CarId = 3029 });
 
         }
 

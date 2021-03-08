@@ -3,10 +3,12 @@ using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
+using Core.Utilities.Helpers;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,15 +24,35 @@ namespace Business.Concrete
 
         }
 
-        [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Add(CarImage entity)
+        //[ValidationAspect(typeof(CarImageValidator))]
+        public IResult Add(IFormFile file,CarImage entity)
         {
-            IResult result = BusinessRules.Run(/* iş kodları kontrolleri*/);
+            var fileUpload = FileHelper.AddAsync(file);
+            IResult result = BusinessRules.Run(CheckCountOfCarImages(entity.CarId) , fileUpload);
+            if (result != null)
+            {
+                return result;
+            }
+            entity.ImagePath = fileUpload.Data;
+            entity.ImageDate = DateTime.Now;
             _carImageDal.Add(entity);
             return new SuccessResult(Messages.Added);
+            
+             
         }
 
-        public IResult Delete(CarImage entity)
+        private IResult CheckCountOfCarImages(int carId)
+        {
+            var result = _carImageDal.GetAll(c=> c.CarId==carId).Count;
+            if (result > 15)
+            {
+                return new ErrorResult(Messages.CarImageNumError);
+            }
+            return new SuccessResult();
+            
+        }
+
+        public IResult Delete(IFormFile file ,CarImage entity)
         {
             _carImageDal.Delete(entity);
             return new SuccessResult(Messages.Deleted);
@@ -47,7 +69,7 @@ namespace Business.Concrete
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarId == carId));
         }
 
-        public IResult Update(CarImage entity)
+        public IResult Update(IFormFile file ,CarImage entity)
         {
             _carImageDal.Add(entity);
             return new SuccessResult(Messages.Updated);
