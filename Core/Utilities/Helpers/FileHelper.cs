@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,39 +11,53 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        static string path = System.IO.Directory.GetCurrentDirectory() + @"\wwwroot\Images";
-        public static IDataResult<String> AddAsync(IFormFile file)
+
+
+        public static string AddAsync(IFormFile file)
         {
-            if (file.Length > 0)
+            var result = newPath(file);
+            try
             {
-                var newGuidPath = "\\" + Guid.NewGuid().ToString("N") + Path.GetExtension(path + file.FileName);
-                using (FileStream fileStream = System.IO.File.Create(path + newGuidPath))
-                {
-                    file.CopyTo(fileStream);
-                    fileStream.Flush();
-                }
-                String filePath = path + newGuidPath;
-                return new SuccessDataResult<String>(filePath, "File Added.");
+                var sourcepath = Path.GetTempFileName();
+                if (file.Length > 0)
+                    using (var stream = new FileStream(sourcepath, FileMode.Create))
+                        file.CopyTo(stream);
+
+                File.Move(sourcepath, result.newPath);
             }
-            return new ErrorDataResult<String>();
+            catch (Exception exception)
+            {
+
+                return exception.Message;
+            }
+
+            return result.Path2;
         }
 
-        public static IDataResult<String> UpdateAsync(string oldfilepath, IFormFile newfile)
+        public static string UpdateAsync(string sourcePath, IFormFile file)
         {
-            if (File.Exists(oldfilepath))
-            {
-                FileHelper.DeleteAsync(oldfilepath);
-                var newGuidPath = "\\" + Guid.NewGuid().ToString("N") + Path.GetExtension(path + newfile.FileName);
-                using (FileStream fileStream = System.IO.File.Create(path + newGuidPath))
-                {
-                    newfile.CopyTo(fileStream);
-                    fileStream.Flush();
-                }
-                string newfilePath = path + "\\" + newGuidPath;
-                return new SuccessDataResult<String>(newfilePath, "File Added");
-            }
-            return new ErrorDataResult<String>("File Doesn't Exists");
+            var result = newPath(file);
 
+            try
+            {
+                //File.Copy(sourcePath,result);
+
+                if (sourcePath.Length > 0)
+                {
+                    using (var stream = new FileStream(result.newPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+
+                File.Delete(sourcePath);
+            }
+            catch (Exception excepiton)
+            {
+                return excepiton.Message;
+            }
+
+            return result.Path2;
         }
 
         public static IResult DeleteAsync(string path)
@@ -58,5 +73,25 @@ namespace Core.Utilities.Helpers
 
             return new SuccessResult();
         }
+
+        public static (string newPath, string Path2) newPath(IFormFile file)
+        {
+            FileInfo ff = new FileInfo(file.FileName);
+            string fileExtension = ff.Extension;
+
+            var creatingUniqueFilename = Guid.NewGuid().ToString("N")
+               + "_" + DateTime.Now.Month + "_"
+               + DateTime.Now.Day + "_"
+               + DateTime.Now.Year + fileExtension;
+
+
+            string path = Environment.CurrentDirectory + @"\wwwroot\Images";
+
+            string result = $@"{path}\{creatingUniqueFilename}";
+
+            return (result, $"\\Images\\{creatingUniqueFilename}");
+        }
+
+
     }
 }

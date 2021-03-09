@@ -12,9 +12,9 @@ namespace Business.Abstract
     {
         IDataResult<List<CarImage>> GetAll(Expression<Func<CarImage , bool>> filter = null);
         IDataResult<CarImage> GetById(int carId);  
-        IResult Add(IFormFile file ,CarImage entity);
-        IResult Update(IFormFile file ,CarImage entity);
-        IResult Delete(IFormFile file ,CarImage entity);
+        IResult Add(IFormFile file, CarImage entity);
+        IResult Update(IFormFile file, CarImage entity);
+        IResult Delete(IFormFile file, CarImage entity);
 
     }
 }
