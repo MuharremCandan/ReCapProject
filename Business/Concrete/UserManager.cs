@@ -2,6 +2,7 @@
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -9,6 +10,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using User = Core.Entities.Concrete.User;
 
 namespace Business.Concrete
 {
@@ -19,8 +21,13 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
 
-        [ValidationAspect(typeof(UserValidator))]
+
+       // [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User entity)
         {
             _userDal.Add(entity);
@@ -42,6 +49,11 @@ namespace Business.Concrete
         {
             _userDal.Update(entity);
             return new SuccessResult(Messages.Updated);
+        }
+      
+        public User GetByMail(string email)
+        {
+            return _userDal.Get(u => u.Email == email);
         }
     }
 }

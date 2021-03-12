@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
@@ -15,7 +16,7 @@ namespace ConsolUI
             //ColorTest();
             //BrandTest();
             // CarTest();
-            //UserTest();
+            UserTest();
             //CustomerTest();
 
             // RentalManager rentalManager = new RentalManager(new EfRentalDal());
@@ -46,24 +47,24 @@ namespace ConsolUI
         {
             UserManager userManager = new UserManager(new EfUserDal());
             //// User Ekleme İşlemleri
-            //userManager.Add(new User { FirstName = "Muharrem", LastName = "Candan", Email = "1muharremcandan@gmail.com", Password = 1234567890 });
-            //userManager.Add(new User { FirstName = "Akın", LastName = "Kılıç", Email = "1akinklc@gmail.com", Password = 13579 });
+            //userManager.Add(new User { FirstName = "Muharrem", LastName = "Candan", Email = "1muharremcandan@gmail.com" , });
+            //userManager.Add(new User { FirstName = "Akın", LastName = "Kılıç", Email = "1akinklc@gmail.com" });
 
             //User ları ekran getirme 
-            var result = userManager.GetAll();
-            if (result.Success == true)
-            {
-                foreach (var user in result.Data)
-                {
-                    Console.WriteLine("Name: {0} \nLast Name :{1}  \nMail: {2}", user.FirstName, user.LastName, user.Email);
-                    Console.WriteLine();
-                }
+            //var result = userManager.GetAll();
+            //if (result.Success == true)
+            //{
+            //    foreach (var user in result.Data)
+            //    {
+            //        Console.WriteLine("Name: {0} \nLast Name :{1}  \nMail: {2}", user.FirstName, user.LastName, user.Email);
+            //        Console.WriteLine();
+            //    }
 
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
+            //}
 
 
             // User Güncelleme
