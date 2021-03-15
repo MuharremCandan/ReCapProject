@@ -10,10 +10,10 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarValidator()
         {
-            RuleFor(c => c.Name).NotEmpty();           
+            RuleFor(c => c.Name).NotEmpty();
             RuleFor(c => c.ModelYear).NotEmpty();
             RuleFor(c => c.ModelYear).GreaterThan(1990);
-            RuleFor(c => c.Description).NotEmpty();          
+            RuleFor(c => c.Description).NotEmpty();
         }       
     }
 }

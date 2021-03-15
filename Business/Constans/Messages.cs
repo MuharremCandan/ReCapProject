@@ -18,7 +18,7 @@ namespace Business.Constans
         public static string CarIsNotAbleToRent = "The Car is not able to rent right now !";
         public static string CarNumberHasbeenReached = "The photos of the car has been reached! ";
         public static string CarImageNumError = "The car number is invalid !";
-        public static string AuthorizationDenied = "Yetkiniz yok";
+        public static string AuthorizationDenied = "Yetkiniz yok!";
         public static string UserRegistered = "Kayıt oldu!";
         public static string UserNotFound = "Kullanıcı bulunamadı !";
         public static string SuccessfulLogin = "Giriş başarılı! ";

@@ -2,6 +2,9 @@
 using Business.BusinessAspect.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
@@ -23,8 +26,10 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [SecuredOperation("product.add,admin")]
+
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
+        [SecuredOperation("product.add,admin")]
         public IResult Add(Car entity)
         {
             IResult result = BusinessRules.Run(/* buraya iş kodlarını giriyoz metot isimleri yani*/ );
@@ -34,17 +39,33 @@ namespace Business.Concrete
 
         }
 
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+            Add(car);
+            if (car.DailyPrice < 0)
+            {
+                throw new Exception("");
+            }
+
+            Add(car);
+            return null;
+        }
+
         public IResult Delete(Car entity)
         {
             _carDal.Delete(entity);
             return new SuccessResult(Messages.Deleted);
         }
 
+        [PerformanceAspect(5)]
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
+        [CacheAspect]
         public IDataResult<Car> GetById(int carId)
         {
             return new SuccessDataResult<Car>(_carDal.Get(p => p.Id == carId));
@@ -55,6 +76,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
+
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car entity)
         {
             _carDal.Update(entity);
