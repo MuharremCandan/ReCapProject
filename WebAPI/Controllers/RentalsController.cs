@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Business.Abstract;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,21 @@ namespace WebAPI.Controllers
     [ApiController]
     public class RentalsController : ControllerBase
     {
+        IRentalService _rentalService;
+        public RentalsController(IRentalService rentalService)
+        {
+            _rentalService = rentalService;
+
+        }
+        [HttpGet("getdetail")]
+        public IActionResult GetRentalDetail()
+        {
+            var result = _rentalService.GetRentalDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

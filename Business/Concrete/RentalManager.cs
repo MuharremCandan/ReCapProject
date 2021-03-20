@@ -7,6 +7,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,11 @@ namespace Business.Concrete
         public IDataResult<List<Rental>> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.RentalDetails());
         }
 
         public IResult Update(Rental entity)

@@ -48,10 +48,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
-        public IDataResult<List<CarImage>> GetAll(Expression<Func<CarImage, bool>> filter = null)
+        public IDataResult<List<CarImage>> GetAll()
         {
 
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(), Messages.Listed);
+        }
+
+        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        {
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(p => p.CarId == carId));
         }
 
         public IDataResult<CarImage> GetById(int carId)

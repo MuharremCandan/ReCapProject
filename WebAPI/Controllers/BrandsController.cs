@@ -76,5 +76,16 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+        [HttpGet("getcarsbybrandid")]
+        public IActionResult GetById(int brandId)
+        {
+            var result = _brandService.GetCarsByBrandId(brandId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
     }
 }

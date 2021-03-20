@@ -21,14 +21,16 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        public List<OperationClaim> GetClaims(User user)
+
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
         {
-            return  _userDal.GetClaims(user);
+            return  new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
             
         }
 
 
-       // [ValidationAspect(typeof(UserValidator))]
+      //  [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User entity)
         {
             _userDal.Add(entity);
@@ -43,7 +45,7 @@ namespace Business.Concrete
 
         public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll());
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(),Messages.UsersListed);
         }
 
         public IResult Update(User entity)

@@ -25,5 +25,8 @@ namespace Business.Constans
         public static string UserAlreadyExists = "Kullanıcı mevcut!";
         public static string AccessTokenCreated = "Token oluşturuldu!";
         public static string PasswordError = "Parola hatası!";
+        public static string CarsListed="Araçlar listelendi!";
+        public static string UsersListed="Kullanıcılar listelendi!";
+        public static string CustomersListed="Müşteriler Listelendi !";
     }
 }
